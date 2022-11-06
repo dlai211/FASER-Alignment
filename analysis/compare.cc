@@ -7,15 +7,15 @@ void compare(){
   //TFile* f1=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter19.root");
   TFile* f1=new TFile("/eos/user/a/agarabag/faser/data/fluka_mc_test.root");
   TTree* t1=(TTree*)f1->Get("trackParam");
-  //TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
-  TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
+  TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
+  //TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
   TTree* t2=(TTree*)f2->Get("trackParam");
 
   // TFile* f3=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter5.root");
   // TTree* t3=(TTree*)f3->Get("trackParam");
 
   //TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
-  TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
+  TString outputname="ideal_geo_MC_vs_data";
 
   std::vector<double>* m_fitParam_x=0;
   std::vector<double>* m_fitParam_y=0;
@@ -94,6 +94,9 @@ void compare(){
   TH1F* h1_x=new TH1F("h1_x","",100,-200,200);
   TH1F* h1_y=new TH1F("h1_y","",100,-200,200);
   TH1F* h1_z=new TH1F("h1_z","",100,300,2500);
+  TH1F* h1_tx=new TH1F("h1_tx","",100,-0.1,0.1);
+  TH1F* h1_ty=new TH1F("h1_ty","",100,-0.1,0.1);
+
   TH1F* h2_residual_x=new TH1F("h2_residaul_x","",100,-0.5,0.5);
   TH1F* h2_pull_x=new TH1F("h2_pull_x","",100,-5,5);
   TH1F* h2_fit_chi2=new TH1F("h2_fit_chi2","",100,0,100);
@@ -107,15 +110,17 @@ void compare(){
   TH1F* h2_x= new TH1F("h2_x","",100,-200,200);
   TH1F* h2_y= new TH1F("h2_y","",100,-200,200);
   TH1F* h2_z= new TH1F("h2_z","",100,300,2500);
+  TH1F* h2_tx=new TH1F("h2_tx","",100,-0.1,0.1);
+  TH1F* h2_ty=new TH1F("h2_ty","",100,-0.1,0.1);
 
-  TH1F* h3_residual_x=new TH1F("h3_residaul_x","",100,-0.5,0.5);
-  TH1F* h3_pull_x=new TH1F("h3_pull_x","",100,-5,5);
-  TH1F* h3_fit_chi2=new TH1F("h3_fit_chi2","",100,0,100);
-  TH1F* h3_residual_x_sta0=new TH1F("h3_residaul_x_sta0","",100,-0.2,0.2);
-  TH1F* h3_residual_x_sta1=new TH1F("h3_residaul_x_sta1","",100,-0.2,0.2);
-  TH1F* h3_residual_x_sta2=new TH1F("h3_residaul_x_sta2","",100,-0.2,0.2);
-  TH1F* h3_residual_x_sta3=new TH1F("h3_residaul_x_sta3","",100,-0.2,0.2);
-  TH1F* h3_pz=new TH1F("h3_pz","",100,300,1350);
+  // TH1F* h3_residual_x=new TH1F("h3_residaul_x","",100,-0.5,0.5);
+  // TH1F* h3_pull_x=new TH1F("h3_pull_x","",100,-5,5);
+  // TH1F* h3_fit_chi2=new TH1F("h3_fit_chi2","",100,0,100);
+  // TH1F* h3_residual_x_sta0=new TH1F("h3_residaul_x_sta0","",100,-0.2,0.2);
+  // TH1F* h3_residual_x_sta1=new TH1F("h3_residaul_x_sta1","",100,-0.2,0.2);
+  // TH1F* h3_residual_x_sta2=new TH1F("h3_residaul_x_sta2","",100,-0.2,0.2);
+  // TH1F* h3_residual_x_sta3=new TH1F("h3_residaul_x_sta3","",100,-0.2,0.2);
+  // TH1F* h3_pz=new TH1F("h3_pz","",100,300,1350);
 
   //loop over all the entries
   for(int ievt=0;ievt<nMaxEvt;ievt++){
@@ -137,6 +142,8 @@ void compare(){
       h1_z->Fill(sqrt(pow(m_fitParam_pz->at(i),2)+pow(m_fitParam_py->at(i),2)+pow(m_fitParam_px->at(i),2)));
       h1_y->Fill(m_fitParam_y->at(i));
       h1_x->Fill(m_fitParam_x->at(i));
+      h1_tx->Fill(m_fitParam_px->at(i)/m_fitParam_pz->at(i));
+      h1_ty->Fill(m_fitParam_py->at(i)/m_fitParam_pz->at(i));
 
       int offset=0;
       for(int j=0;j<m_fitParam_align_local_residual_x_sp->at(i).size();j++){
@@ -173,6 +180,8 @@ void compare(){
       h2_z->Fill(sqrt(pow(m_fitParam_pz->at(i),2)+pow(m_fitParam_py->at(i),2)+pow(m_fitParam_px->at(i),2)));
       h2_y->Fill(m_fitParam_y->at(i));
       h2_x->Fill(m_fitParam_x->at(i));
+      h2_tx->Fill(m_fitParam_px->at(i)/m_fitParam_pz->at(i));
+      h2_ty->Fill(m_fitParam_py->at(i)/m_fitParam_pz->at(i));
       int offset=0;
       for(int j=0;j<m_fitParam_align_local_residual_x_sp->at(i).size();j++){
 	      h2_residual_x->Fill(m_fitParam_align_local_residual_x_sp->at(i).at(j));
@@ -579,5 +588,31 @@ void compare(){
   h2_z->Draw("same");
   leg->Draw();
   c_z_com->SaveAs("../docs/"+outputname+"_com_momentum.png");
+
+  TCanvas* c_tx_com = new TCanvas("c_tx_com");
+  h1_tx->Draw();
+  h1_tx->GetXaxis()->SetTitle("Track Tx");
+  h1_tx->SetLineColor(94);
+  h1_tx->SetFillColor(94);
+  h1_tx->SetLineWidth(3);
+  h2_tx->SetLineWidth(3);
+  h2_tx->SetLineColor(kBlack);
+  h2_tx->Scale(h1_tx->Integral()/h2_tx->Integral());
+  h2_tx->Draw("same");
+  leg->Draw();
+  c_tx_com->SaveAs("../docs/"+outputname+"_com_tx.png");
+
+  TCanvas* c_ty_com = new TCanvas("c_ty_com");
+  h1_ty->Draw();
+  h1_ty->GetXaxis()->SetTitle("Track Ty");
+  h1_ty->SetLineColor(94);
+  h1_ty->SetFillColor(94);
+  h1_ty->SetLineWidth(3);
+  h2_ty->SetLineWidth(3);
+  h2_ty->SetLineColor(kBlack);
+  h2_ty->Scale(h1_ty->Integral()/h2_ty->Integral());
+  h2_ty->Draw("same");
+  leg->Draw();
+  c_ty_com->SaveAs("../docs/"+outputname+"_com_ty.png");
 
   }
