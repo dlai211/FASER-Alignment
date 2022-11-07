@@ -7,15 +7,15 @@ void compare(){
   //TFile* f1=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter19.root");
   TFile* f1=new TFile("/eos/user/a/agarabag/faser/data/fluka_mc_test.root");
   TTree* t1=(TTree*)f1->Get("trackParam");
-  TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
-  //TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
+  //TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
+  TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
   TTree* t2=(TTree*)f2->Get("trackParam");
 
   // TFile* f3=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter5.root");
   // TTree* t3=(TTree*)f3->Get("trackParam");
 
-  //TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
-  TString outputname="ideal_geo_MC_vs_data";
+  TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
+  //TString outputname="ideal_geo_MC_vs_data";
 
   std::vector<double>* m_fitParam_x=0;
   std::vector<double>* m_fitParam_y=0;
@@ -324,7 +324,9 @@ void compare(){
   h2_residual_x->Scale(h1_residual_x->Integral()/h2_residual_x->Integral());
   // h3_residual_x->Scale(h1_residual_x->Integral()/h3_residual_x->Integral());
   leg->AddEntry(h1_residual_x, "Ideal Geometry MC", "L");
-  leg->AddEntry(h2_residual_x, "Mis-aligned Geometry", "L");
+  //leg->AddEntry(h2_residual_x, "Data", "L");
+  leg->AddEntry(h2_residual_x, "Mis-aligned MC", "L");
+
   // leg->AddEntry(h3_residual_x, "mis-aligned MC w/ alignment", "L");
   leg->Draw();
   f1_gaus->SetLineColor(94);
