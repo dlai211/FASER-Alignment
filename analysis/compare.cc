@@ -7,15 +7,15 @@ void compare(){
   //TFile* f1=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter19.root");
   TFile* f1=new TFile("/eos/user/a/agarabag/faser/data/fluka_mc_test.root");
   TTree* t1=(TTree*)f1->Get("trackParam");
-  //TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
-  TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
+  TFile* f2=new TFile("/eos/user/k/keli/Faser/alignment/data/8023_8025_8115_x_y_rz_ift_biased/kfalignment_data_iter0.root");
+  //TFile* f2=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter0.root");
   TTree* t2=(TTree*)f2->Get("trackParam");
 
   // TFile* f3=new TFile("/afs/cern.ch/user/k/keli/eos/Faser/alignment/misalign_MC/iter20_x_y_rz_ift_unbiased_fix3layers/kfalignment_mc_iter5.root");
   // TTree* t3=(TTree*)f3->Get("trackParam");
 
-  TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
-  //TString outputname="ideal_geo_MC_vs_data";
+  //TString outputname="ideal_geo_MC_vs_mis_aligned_MC";
+  TString outputname="ideal_geo_MC_vs_data";
 
   std::vector<double>* m_fitParam_x=0;
   std::vector<double>* m_fitParam_y=0;
@@ -324,8 +324,8 @@ void compare(){
   h2_residual_x->Scale(h1_residual_x->Integral()/h2_residual_x->Integral());
   // h3_residual_x->Scale(h1_residual_x->Integral()/h3_residual_x->Integral());
   leg->AddEntry(h1_residual_x, "Ideal Geometry MC", "L");
-  //leg->AddEntry(h2_residual_x, "Data", "L");
-  leg->AddEntry(h2_residual_x, "Mis-aligned MC", "L");
+  leg->AddEntry(h2_residual_x, "Data", "L");
+  //leg->AddEntry(h2_residual_x, "Mis-aligned MC", "L");
 
   // leg->AddEntry(h3_residual_x, "mis-aligned MC w/ alignment", "L");
   leg->Draw();
@@ -349,7 +349,7 @@ void compare(){
 
   TCanvas* c_res_com_sta0 = new TCanvas("c_res_com_sta0");
   h1_residual_x_sta0->Draw();
-  h1_residual_x_sta0->GetXaxis()->SetTitle("residual_x (mm)");
+  h1_residual_x_sta0->GetXaxis()->SetTitle("residual_x_station0 (mm)");
   h1_residual_x_sta0->SetLineColor(94);
   h1_residual_x_sta0->SetFillColor(94);
   h1_residual_x_sta0->SetLineWidth(3);
@@ -382,7 +382,7 @@ void compare(){
 
   TCanvas* c_res_com_sta1 = new TCanvas("c_res_com_sta1");
   h1_residual_x_sta1->Draw();
-  h1_residual_x_sta1->GetXaxis()->SetTitle("residual_x (mm)");
+  h1_residual_x_sta1->GetXaxis()->SetTitle("residual_x_station1 (mm)");
   h1_residual_x_sta1->SetLineColor(94);
   h1_residual_x_sta1->SetFillColor(94);
   h1_residual_x_sta1->SetLineWidth(3);
@@ -414,7 +414,7 @@ void compare(){
 
   TCanvas* c_res_com_sta2 = new TCanvas("c_res_com_sta2");
   h1_residual_x_sta2->Draw();
-  h1_residual_x_sta2->GetXaxis()->SetTitle("residual_x (mm)");
+  h1_residual_x_sta2->GetXaxis()->SetTitle("residual_x_station2 (mm)");
   h1_residual_x_sta2->SetLineColor(94);
   h1_residual_x_sta2->SetFillColor(94);
   h1_residual_x_sta2->SetLineWidth(3);
@@ -446,7 +446,7 @@ void compare(){
 
   TCanvas* c_res_com_sta3 = new TCanvas("c_res_com_sta3");
   h1_residual_x_sta3->Draw();
-  h1_residual_x_sta3->GetXaxis()->SetTitle("residual_x (mm)");
+  h1_residual_x_sta3->GetXaxis()->SetTitle("residual_x_station3 (mm)");
   h1_residual_x_sta3->SetLineColor(94);
   h1_residual_x_sta3->SetFillColor(94);
   h1_residual_x_sta3->SetLineWidth(3);
@@ -554,7 +554,7 @@ void compare(){
 
   TCanvas* c_y_com = new TCanvas("c_y_com");
   h1_y->Draw();
-  h1_y->GetXaxis()->SetTitle("Track y (GeV)");
+  h1_y->GetXaxis()->SetTitle("Track y");
   h1_y->SetLineColor(94);
   h1_y->SetFillColor(94);
   h1_y->SetLineWidth(3);
@@ -567,7 +567,7 @@ void compare(){
 
   TCanvas* c_x_com = new TCanvas("c_x_com");
   h1_x->Draw();
-  h1_x->GetXaxis()->SetTitle("Track x (GeV)");
+  h1_x->GetXaxis()->SetTitle("Track x");
   h1_x->SetLineColor(94);
   h1_x->SetFillColor(94);
   h1_x->SetLineWidth(3);
