@@ -1,0 +1,14 @@
+.right {
+  margin-left: 45px;
+  width: 25%;
+  right: 0;
+}
+
+  .right ul {
+    list-style-type: none;
+    padding-left: 0;
+
+  }
+  .right li {
+    padding: 15px 5px 15px 5px;
+  }
